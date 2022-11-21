@@ -1,0 +1,1 @@
+cat keywords | awk '{ print "(?i:" $0 ") return process_token(yytext, \"KW_" $0 "\", \"\", KW_" $0 ");"}' > keywords-done
