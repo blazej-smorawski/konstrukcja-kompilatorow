@@ -1,0 +1,103 @@
+Nonterminals useless in grammar
+
+    TEXT_OR_TAGS
+    TEXT
+    TAGS
+
+
+Terminals unused in grammar
+
+    IDENT
+    PI_TAG_BEG
+    PI_TAG_END
+    ETAG_BEG
+    TAG_END
+    CHAR
+
+
+Rules useless in grammar
+
+    4 TEXT_OR_TAGS: TEXT
+    5             | TAGS
+
+    6 TEXT: ε
+    7     | CHAR
+    8     | TEXT CHAR
+
+    9 TAGS: TAG
+   10     | TAG TAGS
+
+
+Grammar
+
+    0 $accept: GRAMMAR $end
+
+    1 GRAMMAR: ε
+    2        | TAG
+
+    3 TAG: STAG_BEG
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    IDENT <s> (258)
+    PI_TAG_BEG <s> (259)
+    PI_TAG_END <s> (260)
+    STAG_BEG <s> (261) 3
+    ETAG_BEG <s> (262)
+    TAG_END <s> (263)
+    CHAR <s> (264)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (10)
+        on left: 0
+    GRAMMAR (11)
+        on left: 1 2
+        on right: 0
+    TAG (12)
+        on left: 3
+        on right: 2
+
+
+State 0
+
+    0 $accept: • GRAMMAR $end
+
+    STAG_BEG  shift, and go to state 1
+
+    $default  reduce using rule 1 (GRAMMAR)
+
+    GRAMMAR  go to state 2
+    TAG      go to state 3
+
+
+State 1
+
+    3 TAG: STAG_BEG •
+
+    $default  reduce using rule 3 (TAG)
+
+
+State 2
+
+    0 $accept: GRAMMAR • $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 GRAMMAR: TAG •
+
+    $default  reduce using rule 2 (GRAMMAR)
+
+
+State 4
+
+    0 $accept: GRAMMAR $end •
+
+    $default  accept
